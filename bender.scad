@@ -77,6 +77,14 @@ module roundedGridLines() {
 
 module mouth() {
    intersection() {
+      translate([8,0,2]) rotate([0,90,0]) hull() {
+         translate([0,-5,0]) cylinder(h=5,d=10,center=true);
+         translate([0,5,0]) cylinder(h=5,d=10,center=true);
+      }
+      translate([-2,0,0]) cylinder(h=20,r=12,center=true);
+   }
+   /*
+   intersection() {
       difference() {
          cylinder(h=25,d=25,center=true);
          cylinder(h=28,d=24,center=true);
@@ -86,22 +94,19 @@ module mouth() {
          circle(5);
       }
    }
+   */
 }
 
 module mouthlines() {
-   color("Black") intersection() {
+   intersection() {
       mouth();
-      rotate([0,0,50])  roundedGridLines();
+      translate([0,-1,-1]) rotate([0,0,50])  roundedGridLines();
    }
 }
 
 module arm_main() {
-   translate([10,-20,-50]) rotate([90,70,0]) 
-      intersection() {
-         rotate_extrude(angle=10,convexity=2) translate([40,0,0]) circle(4);
-//         translate([0,-50,-50]) cube([20,20,20]);
-         rotate([0,0,-20]) translate([-40,-50,-10]) cube([40,32,20]);
-      }   
+   translate([10,-20,-50]) rotate([90,0,0]) 
+         rotate_extrude(angle=60,convexity=2) translate([40,0,0]) circle(4);
 }
 
 module arm_rings() {
@@ -135,7 +140,7 @@ module leg() {
 }
 
 module arm() {
-      difference() {
+      union() {
          arm_main();
          arm_rings();
       }
@@ -189,7 +194,7 @@ color("LightGrey") translate([-10,20,-50]) leg();
 color("LightGrey") translate([10,-20,-50]) rotate([0,0,180]) leg();
 
 
-translate([0,-2,4]) rotate([0,0,85]) {
+translate([-.5,-3,4]) rotate([0,0,85]) {
    color("White") mouth();
    color("Black") translate([.25,.25,0]) mouthlines();
 }
